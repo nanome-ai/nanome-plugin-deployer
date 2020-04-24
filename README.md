@@ -50,8 +50,8 @@ sudo service docker start
 ### Step 3: Pull the Nanome Starter Stack auto-deploy script and run it
 
 ```sh
-git clone https://github.com/nanome-ai/plugin-deployer
-cd plugin-deployer
+git clone https://github.com/nanome-ai/nanome-starter-stack
+cd nanome-starter-stack
 
 sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config port> --plugin vault -w 80 -u <your VM Host IP>
 ```
