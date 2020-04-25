@@ -53,7 +53,7 @@ sudo service docker start
 git clone https://github.com/nanome-ai/nanome-starter-stack
 cd nanome-starter-stack
 
-sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config port> --plugin vault -w 80 -u <your VM Host IP>
+sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config port> --plugin vault -w 80 -u <your VM Host IP>:80
 ```
 
 *Where the Nanome Vault webUI (-w) is web interface port 80, and (-u) specifies the IP address of your current VM.
