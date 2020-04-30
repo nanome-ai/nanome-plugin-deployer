@@ -6,11 +6,11 @@ args=()
 plugins=(
     "chemical-properties"
     "docking"
+    "hydrogens"
     "realtime-scoring"
     "rmsd"
     "structure-prep"
     "vault"
-    "hydrogens"
 )
 plugin_args=()
 keyfile=""
