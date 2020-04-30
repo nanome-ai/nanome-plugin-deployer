@@ -10,6 +10,7 @@ plugins=(
     "rmsd"
     "structure-prep"
     "vault"
+    "hydrogens"
 )
 plugin_args=()
 keyfile=""
