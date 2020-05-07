@@ -6,6 +6,7 @@ args=()
 plugins=(
     "chemical-properties"
     "docking"
+    "esp"
     "hydrogens"
     "realtime-scoring"
     "rmsd"
