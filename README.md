@@ -16,6 +16,7 @@ As of March 17, 2020 - the plugins a part of the Starter Stack are:
 - RMSD - structural alignment
 - Structure Prep - re-calculate bonds and ribbons for Quest users
 - Vault - web-based file management (perfect for Quest)
+- ESP - electrostatic potential maps from APBS
 
 ### Step 1: Provisioning the Dedicated Stack/Plugins Virtual Machine
 
