@@ -2,6 +2,11 @@
 
 A quick script to deploy the Nanome Starter Stack
 
+## Video tutorial
+
+Check out our step-by-step tutorial on deploying Nanome Starter Stack from setting up server to running a plugin:
+https://youtu.be/YrEJ1xfZ9a0
+
 ## Nanome Starter Stack Deployment Instructions
 
 In order to successfully complete the deployment of Nanome’s starter stack group of plugins, you will need to verify that your license is Stack Enabled and you have the Stacks Configuration details in-hand (consists of an IP address and a port).
