@@ -4,7 +4,7 @@ A quick script to deploy the Nanome Starter Stack
 
 ## Video tutorial
 
-Check out our step-by-step tutorial on deploying Nanome Starter Stack from setting up server to running a plugin:
+Check out our step-by-step tutorial on deploying Nanome Starter Stack from setting up a server to running a plugin:
 https://youtu.be/YrEJ1xfZ9a0
 
 ## Nanome Starter Stack Deployment Instructions
