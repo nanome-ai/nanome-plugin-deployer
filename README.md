@@ -53,6 +53,8 @@ sudo yum install docker
 sudo service docker start
 ```
 
+* If you are on a CentOS machine then follow this for installing docker: https://docs.docker.com/engine/install/centos/
+
 ### Step 3: Pull the Nanome Starter Stack auto-deploy script and run it
 
 ```sh
