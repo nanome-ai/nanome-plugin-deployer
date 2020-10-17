@@ -1,6 +1,6 @@
 # Auto Deploy the Nanome Starter Stack
 
-A quick script to deploy the Nanome Starter Stack
+A quick script to deploy the Nanome Starter Stack group of plugins
 
 ## Video tutorial
 
@@ -13,15 +13,16 @@ In order to successfully complete the deployment of Nanome’s starter stack gro
 
 For Non-Enterprise Customers, please verify that your Nanome Licenses are _Stacks Enabled_ with your Nanome representative.
 
-As of March 17, 2020 - the plugins a part of the Starter Stack are:
+As of Oct 16, 2020 - the plugins a part of the Starter Stack are:
 
 - Chemical Properties - cheminformatics calculation using RDKit
-- Docking - using Smina software
+- Docking - using Smina Docking software
 - Real-Time Atom Scoring - using DSX software
-- RMSD - structural alignment
+- RMSD - pairwise structural alignment
 - Structure Prep - re-calculate bonds and ribbons for Quest users
 - Vault - web-based file management (perfect for Quest)
 - ESP - electrostatic potential maps from APBS
+- Hydrogens - add/remove hydrogens
 
 ### Step 1: Provisioning the Dedicated Stack/Plugins Virtual Machine
 
