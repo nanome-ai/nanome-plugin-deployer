@@ -85,3 +85,36 @@ This should list out the plugins that are currently running. Please verify that 
 Go ahead and log onto the VR client computer and launch Nanome
 
 \*Note the VR Client computer and the dedicated Stacks/Plugins VM need to be a part of the same IT firewall network
+
+
+#### Proxy support
+If you are unable to deploy the starter stacks script alongside your proxy. Please use the following set of commands to get things up and running
+
+```
+http_proxy=<http://xxxxxxx:xxxx>
+https_proxy=<https://xxxxxxx:xxxx>
+mkdir ~/.docker
+cat > ~/.docker/config.json <<EOM
+{ 
+  “proxies”: { 
+    “default”: { 
+      “httpProxy”: “$http_proxy”,
+      “httpsProxy”: “$https_proxy”
+    } 
+  } 
+} 
+EOM
+cat > http-proxy.conf <<EOM
+[Service]
+Environment=“HTTP_PROXY=$http_proxy”
+Environment=“HTTPS_PROXY=$https_proxy”
+EOM
+sudo mkdir /etc/systemd/system/docker.service.d
+sudo mv http-proxy.conf /etc/systemd/system/docker.service.d/
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+*Note that most large organizations may not use https behind their network and so the https field of the proxy is the same as the http url.
+
+
