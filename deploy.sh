@@ -132,7 +132,10 @@ fi
 mkdir -p logs
 logs=`(cd logs; pwd)`
 
-docker pull nanome/nanobabel >/dev/null
+echo -n "pulling base image... "
+docker pull nanome/plugin-env >/dev/null
+echo "done"
+
 cd $directory
 for plugin in "${plugins[@]}"; do (
     echo -e "\n$plugin"
