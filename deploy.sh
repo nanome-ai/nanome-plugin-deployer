@@ -8,6 +8,7 @@ plugins=(
     "docking"
     "esp"
     "hydrogens"
+    "minimization"
     "realtime-scoring"
     "rmsd"
     "structure-prep"

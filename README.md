@@ -19,6 +19,7 @@ As of Oct 16, 2020 - the plugins a part of the Starter Stack are:
 - Docking - using Smina Docking software
 - Real-Time Atom Scoring - using DSX software
 - RMSD - pairwise structural alignment
+- Minimization - run energy minimization for molecular structures
 - Structure Prep - re-calculate bonds and ribbons for Quest users
 - Vault - web-based file management (perfect for Quest)
 - ESP - electrostatic potential maps from APBS
@@ -95,19 +96,19 @@ http_proxy=<http://xxxxxxx:xxxx>
 https_proxy=<https://xxxxxxx:xxxx>
 mkdir ~/.docker
 cat > ~/.docker/config.json <<EOM
-{ 
-  “proxies”: { 
-    “default”: { 
-      “httpProxy”: “$http_proxy”,
-      “httpsProxy”: “$https_proxy”
-    } 
-  } 
-} 
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "$http_proxy",
+      "httpsProxy": "$https_proxy"
+    }
+  }
+}
 EOM
 cat > http-proxy.conf <<EOM
 [Service]
-Environment=“HTTP_PROXY=$http_proxy”
-Environment=“HTTPS_PROXY=$https_proxy”
+Environment="HTTP_PROXY=$http_proxy"
+Environment="HTTPS_PROXY=$https_proxy"
 EOM
 sudo mkdir /etc/systemd/system/docker.service.d
 sudo mv http-proxy.conf /etc/systemd/system/docker.service.d/
@@ -116,5 +117,3 @@ sudo systemctl restart docker
 ```
 
 *Note that most large organizations may not use https behind their network and so the https field of the proxy is the same as the http url.
-
-
