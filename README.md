@@ -13,7 +13,7 @@ In order to successfully complete the deployment of Nanome’s starter stack gro
 
 For Non-Enterprise Customers, please verify that your Nanome Licenses are _Stacks Enabled_ with your Nanome representative.
 
-As of Oct 16, 2020 - the plugins a part of the Starter Stack are:
+As of Oct 27, 2020 - the plugins a part of the Starter Stack are:
 
 - Chemical Properties - cheminformatics calculation using RDKit
 - Docking - using Smina Docking software
