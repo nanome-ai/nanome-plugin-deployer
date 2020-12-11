@@ -52,6 +52,7 @@ ssh ec2-user@<ip-address>
 
 sudo yum install git
 sudo yum install docker
+sudo systemctl enable docker
 sudo service docker start
 ```
 
