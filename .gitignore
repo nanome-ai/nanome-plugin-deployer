@@ -1,3 +1,4 @@
 /logs
-/plugins
+/plugins/*
+!/plugins/.gitkeep
 redeploy.sh
