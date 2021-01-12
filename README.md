@@ -52,9 +52,14 @@ ssh ec2-user@<ip-address>
 
 sudo yum install git
 sudo yum install docker
+sudo groupadd docker
 sudo systemctl enable docker
+sudo usermod -aG docker $USER
 sudo service docker start
+
+
 ```
+Now Log out and back into the instance
 
 * If you are on a CentOS machine then follow this for installing docker: https://docs.docker.com/engine/install/centos/
 
