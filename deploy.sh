@@ -4,6 +4,7 @@ directory="plugins"
 interactive=0
 args=()
 plugins=(
+    "2d-chemical-preview"
     "chemical-properties"
     "docking"
     "esp"
