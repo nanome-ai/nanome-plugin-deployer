@@ -51,9 +51,8 @@ SSH into the VM using the IP address and the user
 ```sh
 ssh ec2-user@<ip-address>
 
-sudo yum install git
-sudo yum install docker
-sudo groupadd docker
+sudo yum install git -y
+sudo yum install docker -y
 sudo systemctl enable docker
 sudo usermod -aG docker $USER
 sudo service docker start
