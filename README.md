@@ -16,6 +16,7 @@ For Non-Enterprise Customers, please verify that your Nanome Licenses are _Stack
 As of Feb 20, 2020 - the plugins a part of the Starter Stack are:
 
 - 2D Chemical Preview - generate 2D chemical representations
+- Chemical Interactions - calculate interactions using Arpeggio
 - Chemical Properties - cheminformatics calculation using RDKit
 - Docking - using Smina Docking software
 - Real-Time Atom Scoring - using DSX software
