@@ -4,7 +4,7 @@ directory="plugins"
 interactive=0
 args=()
 plugins=(
-    # "2d-chemical-preview"
+    "2d-chemical-preview"
     "chemical-interactions"
     "chemical-properties"
     "coordinate-align"
