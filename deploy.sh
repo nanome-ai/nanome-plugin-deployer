@@ -7,6 +7,7 @@ plugins=(
     "2d-chemical-preview"
     "chemical-interactions"
     "chemical-properties"
+    "coordinate-align"
     "docking"
     "esp"
     "hydrogens"
