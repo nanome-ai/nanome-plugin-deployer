@@ -15,6 +15,7 @@ plugins=(
     "rmsd"
     "structure-prep"
     "vault"
+    "coordinate-align"
 )
 plugin_args=()
 key=""
