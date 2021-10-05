@@ -4,9 +4,10 @@ directory="plugins"
 interactive=0
 args=()
 plugins=(
-    "2d-chemical-preview"
+    # "2d-chemical-preview"
     "chemical-interactions"
     "chemical-properties"
+    "coordinate-align"
     "docking"
     "esp"
     "hydrogens"
@@ -15,7 +16,6 @@ plugins=(
     "rmsd"
     "structure-prep"
     "vault"
-    "coordinate-align"
 )
 plugin_args=()
 key=""
