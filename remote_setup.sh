@@ -5,8 +5,10 @@
 
 mkdir nanome-starter-stack
 
-git init --bare ~/nanome-starter-stack.git
+git init --bare nanome-starter-stack.git
 
-ln post-receive ~/nanome-starter-stack.git/hooks/post-receive
+ln post-receive nanome-starter-stack.git/hooks/post-receive
 
 chmod +x post-receive
+
+chmod +x nanome-starter-stack/deploy.sh
