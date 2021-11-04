@@ -161,7 +161,7 @@ for plugin in "${plugins[@]}"; do (
     cd $plugin
     echo $PWD
     echo -n "  pulling... "
-    git pull --work-tree=$PWD -q
+    git pull --worktree . -q
     echo "done"
     cd docker
     echo -n "  building... "
