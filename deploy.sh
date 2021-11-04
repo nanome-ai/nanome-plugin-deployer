@@ -159,6 +159,7 @@ for plugin in "${plugins[@]}"; do (
     fi
 
     cd $plugin
+    echo $plugin
     echo -n "  pulling... "
     git pull -q
     echo "done"
