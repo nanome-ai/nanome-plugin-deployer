@@ -161,6 +161,7 @@ for plugin in "${plugins[@]}"; do (
     cd $plugin
     echo $PWD
     echo -n "  pulling... "
+    echo $(git remote -v)
     git pull -q
     echo "done"
     cd docker
