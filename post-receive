@@ -13,9 +13,6 @@ then
   export $(cat $ENV_FILE | sed 's/#.*//g' | xargs)
 fi
 
-echo NTS_HOST=$NTS_HOST
-echo NTS_PORT=$NTS_PORT
-
 while read oldrev newrev ref
 do
         # only checking out the master (or whatever branch you would like to deploy)

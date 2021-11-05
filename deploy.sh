@@ -150,30 +150,37 @@ docker pull nanome/plugin-env >/dev/null
 echo "done"
 
 cd $directory
-for plugin in "${plugins[@]}"; do (
-    echo -e "\n$plugin"
-    if [ ! -d "$plugin" ]; then
-        echo -n "  cloning... "
-        git clone -q "$github_url$plugin" $plugin
-        echo "done"
+for plugin_name in "${plugins[@]}"; do (
+    echo -e "\n$plugin_name"
+    github_url="$github_url$plugin_name"
+
+    GIT_DIR=$PWD/$plugin_name.git
+    WORK_TREE=$PWD/$plugin_name
+
+    echo $GIT_DIR
+    echo $WORK_TREE
+    if [ ! -d $GIT_DIR ]; then
+        echo -n "Cloning $github_url to $GIT_DIR" 
+        git clone --bare $github_url $GIT_DIR
     fi
-
-    cd $plugin
-    echo $(git remote -v)
-    echo -n "  pulling... "
-    git pull -q
+    if [ ! -d $WORK_TREE ]; then
+        mkdir -p $WORK_TREE
+    fi
+    echo "checking out"
+    git --work-tree=$WORK_TREE --git-dir=$GIT_DIR checkout -f master
     echo "done"
-    cd docker
+
+    cd $WORK_TREE/docker
     echo -n "  building... "
-    ./build.sh -u 1>> "$logs/$plugin.log"
+    ./build.sh -u 1>> "$logs/$plugin_name.log"
     echo "done"
 
-    get_plugin_index $plugin
+    get_plugin_index $plugin_name
     arg_string="${args[@]} ${plugin_args[$plugin_index]}"
     read -ra args <<< "$arg_string"
 
     echo -n "  deploying... "
-    ./deploy.sh "${args[@]}" 1>> "$logs/$plugin.log"
+    ./deploy.sh "${args[@]}" 1>> "$logs/$plugin_name.log"
     echo "done"
 ); done
 
