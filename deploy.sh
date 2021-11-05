@@ -157,8 +157,12 @@ for plugin_name in "${plugins[@]}"; do (
     GIT_DIR=$PWD/$plugin_name.git
     WORK_TREE=$PWD/$plugin_name
 
-    echo $GIT_DIR
-    echo $WORK_TREE
+    # symlink post-receive hook into git repo
+    if [ ! -f "$GIT_DIR/hooks/post-receive" ]; then
+        ln -s ../../post-receive $GIT_DIR/hooks/post-receive
+        chmod +x $GIT_DIR/hooks/post-receive
+    fi
+
     if [ ! -d $GIT_DIR ]; then
         echo -n "Cloning $github_url to $GIT_DIR" 
         git clone --bare $github_url $GIT_DIR
