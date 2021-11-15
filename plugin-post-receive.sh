@@ -21,11 +21,11 @@ do
     # only checking out the master (or whatever branch you would like to deploy)
     if [ "$ref" = "refs/heads/$BRANCH" ];
     then
-            echo "Ref $ref received. Deploying ${BRANCH} branch to production..."
-            git --work-tree=$WORK_DIR --git-dir=$GIT_DIR checkout -f $BRANCH
-            $WORK_DIR/docker/build.sh
-            $WORK_DIR/docker/deploy.sh -a $NTS_HOST -p $NTS_PORT
+        echo "Ref $ref received. Deploying ${BRANCH} branch to production..."
+        git --work-tree=$WORK_DIR --git-dir=$GIT_DIR checkout -f $BRANCH
+        $WORK_DIR/docker/build.sh
+        $WORK_DIR/docker/deploy.sh -a $NTS_HOST -p $NTS_PORT
     else
-            echo "Ref $ref received. Doing nothing: only the ${BRANCH} branch may be deployed on this server."
+        echo "Ref $ref received. Doing nothing: only the ${BRANCH} branch may be deployed on this server."
     fi
 done
