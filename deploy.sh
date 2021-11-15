@@ -21,6 +21,9 @@ plugin_args=()
 key=""
 github_url="https://github.com/nanome-ai/plugin-"
 
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+TEMPLATE_POST_RECEIVE_HOOK="$parent_path/plugin-post-receive.sh"
+
 usage() {
     cat <<EOM
 
@@ -131,7 +134,9 @@ if [ $interactive == 1 ]; then
     fi
 fi
 
+echo $directory
 if [ ! -d "$directory" ]; then
+    echo "Directory $directory does not exist"
     mkdir -p $directory
 fi
 
@@ -157,13 +162,6 @@ for plugin_name in "${plugins[@]}"; do (
     GIT_DIR=$PWD/$plugin_name.git
     WORK_TREE=$PWD/$plugin_name
 
-    # copy post-receive hook into git repo
-    POST_RECEIVE_HOOK=`(cd ../../; pwd)/post-receive`
-    if [ ! -f $POST_RECEIVE_HOOK ]; then
-        cp ../../post-receive $POST_RECEIVE_HOOK
-        chmod +x $POST_RECEIVE_HOOK
-    fi
-
     if [ ! -d $GIT_DIR ]; then
         echo -n "Cloning $github_url to $GIT_DIR" 
         git clone --bare $github_url $GIT_DIR
@@ -175,6 +173,17 @@ for plugin_name in "${plugins[@]}"; do (
     git --work-tree=$WORK_TREE --git-dir=$GIT_DIR checkout -f master
     echo "done"
 
+    # copy post-receive hook into git repo
+    POST_RECEIVE_HOOK=$GIT_DIR/hooks/post-receive
+    DEFAULT_BRANCH="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
+    if [ ! -f $POST_RECEIVE_HOOK ]; then
+        cp $TEMPLATE_POST_RECEIVE_HOOK $POST_RECEIVE_HOOK
+        echo $WORK_TREE
+        sed -i "s/{{WORK_TREE}}/$WORK_TREE/" $POST_RECEIVE_HOOK
+        sed -i "s/{{GIT_DIR}}/$GIT_DIR/" $POST_RECEIVE_HOOK
+        sed -i "s/{{DEFAULT_BRANCH}}/$DEFAULT_BRANCH/" $POST_RECEIVE_HOOK
+        chmod +x $POST_RECEIVE_HOOK
+    fi
     cd $WORK_TREE/docker
     echo -n "  building... "
     ./build.sh -u 1>> "$logs/$plugin_name.log"
