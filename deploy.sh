@@ -5,17 +5,17 @@ interactive=0
 args=()
 plugins=(
     "2d-chemical-preview"
-    "chemical-interactions"
-    "chemical-properties"
-    "coordinate-align"
-    "docking"
-    "esp"
-    "hydrogens"
-    "minimization"
-    "realtime-scoring"
-    "rmsd"
-    "structure-prep"
-    "vault"
+    # "chemical-interactions"
+    # "chemical-properties"
+    # "coordinate-align"
+    # "docking"
+    # "esp"
+    # "hydrogens"
+    # "minimization"
+    # "realtime-scoring"
+    # "rmsd"
+    # "structure-prep"
+    # "vault"
 )
 plugin_args=()
 key=""
@@ -178,9 +178,9 @@ for plugin_name in "${plugins[@]}"; do (
     # copy template post-receive hook into git repo, and replace with correct values.
     POST_RECEIVE_HOOK=$GIT_DIR/hooks/post-receive
     cp $TEMPLATE_POST_RECEIVE_HOOK $POST_RECEIVE_HOOK
-    sed -i "s | {{WORK_TREE}} | $WORK_TREE | " $POST_RECEIVE_HOOK
-    sed -i "s | {{GIT_DIR}} | $GIT_DIR | " $POST_RECEIVE_HOOK
-    sed -i "s | {{DEFAULT_BRANCH}} | $DEFAULT_BRANCH | " $POST_RECEIVE_HOOK
+    sed -i "s|{{WORK_TREE}}|$WORK_TREE|" $POST_RECEIVE_HOOK
+    sed -i "s|{{GIT_DIR}}|$GIT_DIR|" $POST_RECEIVE_HOOK
+    sed -i "s|{{DEFAULT_BRANCH}}|$DEFAULT_BRANCH|" $POST_RECEIVE_HOOK
     chmod +x $POST_RECEIVE_HOOK
 
     cd $WORK_TREE/docker
