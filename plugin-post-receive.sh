@@ -1,12 +1,15 @@
 #!/bin/bash
 
 # This script is called by the post-receive hook of the git repository.
-# deploy.sh script replaces the placeholder values for each plugin.
+
 ENV_FILE="$HOME/.env"
+# deploy.sh replaces these placeholder values for each plugin.
 WORK_TREE="{{WORK_TREE}}"
 GIT_DIR="{{GIT_DIR}}"
 BRANCH="{{DEFAULT_BRANCH}}"
 
+
+# Load environment variables from .env file, if it exists.
 if [ -f $ENV_FILE ]
 then
     echo "LOADING .env file"
