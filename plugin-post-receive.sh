@@ -2,12 +2,11 @@
 
 # This script is called by the post-receive hook of the git repository.
 
-ENV_FILE="$HOME/.env"
 # deploy.sh replaces these placeholder values for each plugin.
+ENV_FILE="$HOME/.env"
 WORK_TREE="{{WORK_TREE}}"
 GIT_DIR="{{GIT_DIR}}"
 BRANCH="{{DEFAULT_BRANCH}}"
-
 
 # Load environment variables from .env file, if it exists.
 if [ -f $ENV_FILE ]
@@ -15,7 +14,6 @@ then
     echo "LOADING .env file"
     export $(cat $ENV_FILE | sed 's/#.*//g' | xargs)
 fi
-
 
 while read oldrev newrev ref
 do

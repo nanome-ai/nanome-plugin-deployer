@@ -5,17 +5,17 @@ interactive=0
 args=()
 plugins=(
     "2d-chemical-preview"
-    # "chemical-interactions"
-    # "chemical-properties"
-    # "coordinate-align"
-    # "docking"
-    # "esp"
-    # "hydrogens"
-    # "minimization"
-    # "realtime-scoring"
-    # "rmsd"
-    # "structure-prep"
-    # "vault"
+    "chemical-interactions"
+    "chemical-properties"
+    "coordinate-align"
+    "docking"
+    "esp"
+    "hydrogens"
+    "minimization"
+    "realtime-scoring"
+    "rmsd"
+    "structure-prep"
+    "vault"
 )
 plugin_args=()
 key=""
@@ -173,8 +173,8 @@ for plugin_name in "${plugins[@]}"; do (
     echo "done"
 
     # Default branch is usually master, but sometimes it's main.
-    DEFAULT_BRANCH="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
-    
+    DEFAULT_BRANCH="$(cd $GIT_DIR && git remote show origin | sed -n '/HEAD branch/s/.*: //p')"    
+
     # copy template post-receive hook into git repo, and replace with correct values.
     POST_RECEIVE_HOOK=$GIT_DIR/hooks/post-receive
     cp $TEMPLATE_POST_RECEIVE_HOOK $POST_RECEIVE_HOOK
