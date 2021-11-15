@@ -172,14 +172,15 @@ for plugin_name in "${plugins[@]}"; do (
     git --work-tree=$WORK_TREE --git-dir=$GIT_DIR checkout -f master
     echo "done"
 
+    # Default branch is usually master, but sometimes it's main.
     DEFAULT_BRANCH="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
     
     # copy template post-receive hook into git repo, and replace with correct values.
     POST_RECEIVE_HOOK=$GIT_DIR/hooks/post-receive
     cp $TEMPLATE_POST_RECEIVE_HOOK $POST_RECEIVE_HOOK
-    sed -i "s|{{WORK_TREE}}|$WORK_TREE|" $POST_RECEIVE_HOOK
-    sed -i "s|{{GIT_DIR}}|$GIT_DIR|" $POST_RECEIVE_HOOK
-    sed -i "s|{{DEFAULT_BRANCH}}|$DEFAULT_BRANCH|" $POST_RECEIVE_HOOK
+    sed -i "s | {{WORK_TREE}} | $WORK_TREE | " $POST_RECEIVE_HOOK
+    sed -i "s | {{GIT_DIR}} | $GIT_DIR | " $POST_RECEIVE_HOOK
+    sed -i "s | {{DEFAULT_BRANCH}} | $DEFAULT_BRANCH | " $POST_RECEIVE_HOOK
     chmod +x $POST_RECEIVE_HOOK
 
     cd $WORK_TREE/docker
