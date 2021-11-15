@@ -4,18 +4,18 @@ directory="plugins"
 interactive=0
 args=()
 plugins=(
-    # "2d-chemical-preview"
-    # "chemical-interactions"
-    # "chemical-properties"
-    # "coordinate-align"
-    # "docking"
-    # "esp"
+    "2d-chemical-preview"
+    "chemical-interactions"
+    "chemical-properties"
+    "coordinate-align"
+    "docking"
+    "esp"
     "hydrogens"
-    # "minimization"
-    # "realtime-scoring"
-    # "rmsd"
-    # "structure-prep"
-    # "vault"
+    "minimization"
+    "realtime-scoring"
+    "rmsd"
+    "structure-prep"
+    "vault"
 )
 plugin_args=()
 key=""
@@ -157,10 +157,11 @@ for plugin_name in "${plugins[@]}"; do (
     GIT_DIR=$PWD/$plugin_name.git
     WORK_TREE=$PWD/$plugin_name
 
-    # symlink post-receive hook into git repo
-    if [ ! -f "$GIT_DIR/hooks/post-receive" ]; then
-        ln -s ../../post-receive $GIT_DIR/hooks/post-receive
-        chmod +x $GIT_DIR/hooks/post-receive
+    # copy post-receive hook into git repo
+    POST_RECEIVE_HOOK=`(cd ../../; pwd)/post-receive`
+    if [ ! -f $POST_RECEIVE_HOOK ]; then
+        cp ../../post-receive $POST_RECEIVE_HOOK
+        chmod +x $POST_RECEIVE_HOOK
     fi
 
     if [ ! -d $GIT_DIR ]; then
@@ -186,6 +187,7 @@ for plugin_name in "${plugins[@]}"; do (
     echo -n "  deploying... "
     ./deploy.sh "${args[@]}" 1>> "$logs/$plugin_name.log"
     echo "done"
+
 ); done
 
 echo -e "\ndone"
