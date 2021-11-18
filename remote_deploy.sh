@@ -21,6 +21,9 @@ plugin_args=()
 key=""
 github_url="https://github.com/nanome-ai/plugin-"
 
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+TEMPLATE_POST_RECEIVE_HOOK="$parent_path/plugin-post-receive.sh"
+
 usage() {
     cat <<EOM
 
@@ -132,6 +135,7 @@ if [ $interactive == 1 ]; then
 fi
 
 if [ ! -d "$directory" ]; then
+    echo "Directory $directory does not exist"
     mkdir -p $directory
 fi
 
@@ -150,30 +154,48 @@ docker pull nanome/plugin-env >/dev/null
 echo "done"
 
 cd $directory
-for plugin in "${plugins[@]}"; do (
-    echo -e "\n$plugin"
-    if [ ! -d "$plugin" ]; then
-        echo -n "  cloning... "
-        git clone -q "$github_url$plugin" $plugin
-        echo "done"
+for plugin_name in "${plugins[@]}"; do (
+    echo -e "\n$plugin_name"
+    github_url="$github_url$plugin_name"
+
+    GIT_DIR=$PWD/$plugin_name.git
+    WORK_TREE=$PWD/$plugin_name
+
+    if [ ! -d $GIT_DIR ]; then
+        echo -n "Cloning $github_url to $GIT_DIR" 
+        git clone --bare $github_url $GIT_DIR
     fi
-
-    cd $plugin
-    echo -n "  pulling... "
-    git pull -q
+    if [ ! -d $WORK_TREE ]; then
+        mkdir -p $WORK_TREE
+    fi
+    echo "checking out"
+    git --work-tree=$WORK_TREE --git-dir=$GIT_DIR checkout -f master
     echo "done"
-    cd docker
+
+    # Default branch is usually master, but sometimes it's main.
+    DEFAULT_BRANCH="$(cd $GIT_DIR && git remote show origin | sed -n '/HEAD branch/s/.*: //p')"    
+
+    # copy template post-receive hook into git repo, and replace with correct values.
+    POST_RECEIVE_HOOK=$GIT_DIR/hooks/post-receive
+    cp $TEMPLATE_POST_RECEIVE_HOOK $POST_RECEIVE_HOOK
+    sed -i "s|{{WORK_TREE}}|$WORK_TREE|" $POST_RECEIVE_HOOK
+    sed -i "s|{{GIT_DIR}}|$GIT_DIR|" $POST_RECEIVE_HOOK
+    sed -i "s|{{DEFAULT_BRANCH}}|$DEFAULT_BRANCH|" $POST_RECEIVE_HOOK
+    chmod +x $POST_RECEIVE_HOOK
+
+    cd $WORK_TREE/docker
     echo -n "  building... "
-    ./build.sh -u 1>> "$logs/$plugin.log"
+    ./build.sh -u 1>> "$logs/$plugin_name.log"
     echo "done"
 
-    get_plugin_index $plugin
+    get_plugin_index $plugin_name
     arg_string="${args[@]} ${plugin_args[$plugin_index]}"
     read -ra args <<< "$arg_string"
 
     echo -n "  deploying... "
-    ./deploy.sh "${args[@]}" 1>> "$logs/$plugin.log"
+    ./deploy.sh "${args[@]}" 1>> "$logs/$plugin_name.log"
     echo "done"
+
 ); done
 
 echo -e "\ndone"
