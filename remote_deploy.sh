@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Deploy starter stack in a way that enables updating via git push.
 directory="plugins"
 interactive=0
 args=()
