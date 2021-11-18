@@ -13,19 +13,19 @@ In order to successfully complete the deployment of Nanome’s starter stack gro
 
 For Non-Enterprise Customers, please verify that your Nanome Licenses are _Stacks Enabled_ with your Nanome representative.
 
-As of Feb 20, 2020 - the plugins a part of the Starter Stack are:
+As of Nov 18, 2021 - the plugins a part of the Starter Stack are:
 
 - 2D Chemical Preview - generate 2D chemical representations
 - Chemical Interactions - calculate interactions using Arpeggio
 - Chemical Properties - cheminformatics calculation using RDKit
 - Docking - using Smina Docking software
+- ESP - calculate electrostatic potential map.
+- Hydrogens - add and remove hydrogens to selected structures within the Nanome workspace
+- Minimization - run energy minimization for molecular structures
 - Real-Time Atom Scoring - using DSX software
 - RMSD - pairwise structural alignment
-- Minimization - run energy minimization for molecular structures
 - Structure Prep - re-calculate bonds and ribbons for Quest users
 - Vault - web-based file management (perfect for Quest)
-- ESP - electrostatic potential maps from APBS
-- Hydrogens - add/remove hydrogens
 
 ### Step 1: Provisioning the Dedicated Stack/Plugins Virtual Machine
 
