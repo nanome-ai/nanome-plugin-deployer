@@ -78,7 +78,7 @@ echo -e "Nanome Starter Stack Deployer"
 if [ $# -eq 0 ]; then
     interactive=1
 else
-    echo "./deploy.sh $*" > redeploy.sh
+    echo "./remote_deploy.sh $*" > redeploy.sh
     chmod +x redeploy.sh
 fi
 
