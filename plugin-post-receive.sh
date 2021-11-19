@@ -22,9 +22,9 @@ do
     then
         echo "Ref $ref received. Deploying ${BRANCH} branch to environment..."
         git --work-tree=$WORK_TREE --git-dir=$GIT_DIR checkout -f $BRANCH
-        $WORK_TREE/docker/build.sh
         cd $WORK_TREE/docker
-        $WORK_TREE/docker/redeploy.sh
+        ./build.sh
+        ./redeploy.sh
     else
         echo "Ref $ref received. Doing nothing: only the ${BRANCH} branch may be deployed on this server."
     fi
