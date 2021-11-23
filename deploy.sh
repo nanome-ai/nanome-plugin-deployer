@@ -2,7 +2,7 @@
 source base.sh
 
 cd $INSTALL_DIRECTORY
-for plugin_name in "${plugin_names[@]}"; do (
+for plugin_name in "${plugins[@]}"; do (
     echo -e "\n$plugin_name"
     if [ ! -d "$plugin_name" ]; then
         echo -n "  cloning... "
