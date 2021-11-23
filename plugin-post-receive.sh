@@ -2,7 +2,7 @@
 
 # This script is called by the post-receive hook of the git repository.
 
-# deploy.sh replaces these placeholder values for each plugin.
+# remote_deploy.sh replaces these placeholder values for each plugin.
 ENV_FILE="$HOME/.env"
 WORK_TREE="{{WORK_TREE}}"
 GIT_DIR="{{GIT_DIR}}"
