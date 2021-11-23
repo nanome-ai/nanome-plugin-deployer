@@ -71,6 +71,7 @@ Now Log out and back into the instance
 ```sh
 git clone https://github.com/nanome-ai/nanome-starter-stack
 cd nanome-starter-stack
+```
 
 For a typical deployment, run the following command:
 ```sh
