@@ -15,7 +15,7 @@ for plugin_name in "${plugins[@]}"; do (
 
     if [ ! -d $GIT_DIR ]; then
         echo -n "Cloning $github_url to $GIT_DIR" 
-        git clone --bare $github_url $GIT_DIR
+        git clone --bare -q $github_url $GIT_DIR
     fi
     if [ ! -d $WORK_TREE ]; then
         mkdir -p $WORK_TREE
