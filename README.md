@@ -13,7 +13,7 @@ In order to successfully complete the deployment of Nanome’s starter stack gro
 
 For Non-Enterprise Customers, please verify that your Nanome Licenses are _Stacks Enabled_ with your Nanome representative.
 
-As of Nov 18, 2021 - the plugins a part of the Starter Stack are:
+Starter Stack Plugins include::
 
 - 2D Chemical Preview - generate 2D chemical representations
 - Chemical Interactions - calculate interactions using Arpeggio
