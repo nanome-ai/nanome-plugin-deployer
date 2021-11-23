@@ -1,8 +1,11 @@
 #!/bin/bash
 # Deploy starter stack in a way that enables updating via git push.
+
 source base.sh
 
-cd $directory
+TEMPLATE_POST_RECEIVE_HOOK="$parent_path/plugin-post-receive.sh"
+
+cd $INSTALL_DIRECTORY
 for plugin_name in "${plugins[@]}"; do (
     echo -e "\n$plugin_name"
     github_url="$github_url$plugin_name"
@@ -32,6 +35,7 @@ for plugin_name in "${plugins[@]}"; do (
     sed -i "s|{{DEFAULT_BRANCH}}|$DEFAULT_BRANCH|" $POST_RECEIVE_HOOK
     chmod +x $POST_RECEIVE_HOOK
 
+    # Build docker container
     cd $WORK_TREE/docker
     echo -n "  building... "
     ./build.sh -u 1>> "$logs/$plugin_name.log"
@@ -41,6 +45,7 @@ for plugin_name in "${plugins[@]}"; do (
     arg_string="${args[@]} ${plugin_args[$plugin_index]}"
     read -ra args <<< "$arg_string"
 
+    # Deploy container
     echo -n "  deploying... "
     ./deploy.sh "${args[@]}" 1>> "$logs/$plugin_name.log"
     echo "done"

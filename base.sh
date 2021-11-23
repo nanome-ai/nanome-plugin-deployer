@@ -1,5 +1,8 @@
-# Functions used by both deploy.sh and remote_deploy.sh
-directory="plugins"
+# Arg parsing and preprocessing used by both deploy.sh and remote_deploy.sh
+
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+default_install_directory="$parent_path/plugins"
+
 interactive=0
 args=()
 
@@ -99,7 +102,7 @@ while [ $# -gt 0 ]; do
             ;;
         -d | --directory )
             shift
-            directory=$1
+            INSTALL_DIRECTORY=$1
             ;;
         --plugin )
             parse_plugin_args $*
@@ -120,8 +123,8 @@ done
 if [ $interactive == 1 ]; then
     echo ""
     args=()
-    read -p "Plugin directory?  (plugins): " directory
-    directory=${directory:-"plugins"}
+    read -p "Plugin directory?  (plugins): " INSTALL_DIRECTORY
+    INSTALL_DIRECTORY=${INSTALL_DIRECTORY:-$default_install_directory}
     read -p "NTS address?     (127.0.0.1): " address
     address=${address:-"127.0.0.1"}
     args+=("-a" $address)
@@ -131,9 +134,9 @@ if [ $interactive == 1 ]; then
     fi
 fi
 
-if [ ! -d "$directory" ]; then
-    echo "Directory $directory does not exist"
-    mkdir -p $directory
+if [ ! -d "$INSTALL_DIRECTORY" ]; then
+    echo "Directory $INSTALL_DIRECTORY does not exist"
+    mkdir -p $INSTALL_DIRECTORY
 fi
 
 if [ -n "$key" ]; then
