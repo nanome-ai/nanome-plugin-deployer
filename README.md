@@ -13,19 +13,19 @@ In order to successfully complete the deployment of Nanome’s starter stack gro
 
 For Non-Enterprise Customers, please verify that your Nanome Licenses are _Stacks Enabled_ with your Nanome representative.
 
-As of Feb 20, 2020 - the plugins a part of the Starter Stack are:
+Starter Stack Plugins include::
 
 - 2D Chemical Preview - generate 2D chemical representations
 - Chemical Interactions - calculate interactions using Arpeggio
 - Chemical Properties - cheminformatics calculation using RDKit
 - Docking - using Smina Docking software
+- ESP - calculate electrostatic potential map.
+- Hydrogens - add and remove hydrogens to selected structures within the Nanome workspace
+- Minimization - run energy minimization for molecular structures
 - Real-Time Atom Scoring - using DSX software
 - RMSD - pairwise structural alignment
-- Minimization - run energy minimization for molecular structures
 - Structure Prep - re-calculate bonds and ribbons for Quest users
 - Vault - web-based file management (perfect for Quest)
-- ESP - electrostatic potential maps from APBS
-- Hydrogens - add/remove hydrogens
 
 ### Step 1: Provisioning the Dedicated Stack/Plugins Virtual Machine
 
@@ -71,7 +71,10 @@ Now Log out and back into the instance
 ```sh
 git clone https://github.com/nanome-ai/nanome-starter-stack
 cd nanome-starter-stack
+```
 
+For a typical deployment, run the following command:
+```sh
 sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config port> --plugin vault -w 80 -u <your VM Host IP>:80
 ```
 
@@ -79,6 +82,8 @@ sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config
 *Make sure to configure your Virtual machine to have the web interface port (80 defaults) to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
 
 NOTE: to add arguments specific to a plugin, append any number of `--plugin <plugin-name> [args]` to the `./deploy.sh` command.
+
+Advanced: If you wish to enable git-ops style deployments, you can replace `./deploy.sh` with `./remote_deploy.sh` in the command above. Remote deploy will clone the plugin repositories using bare repos, which allows you to push changes to the repo. When a change is received, it uses git hooks to build and deploy your latest changes.
 
 ### Step 4: Docker Container Health Check
 
