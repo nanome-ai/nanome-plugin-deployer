@@ -1,7 +1,7 @@
 # Arg parsing and preprocessing used by both deploy.sh and remote_deploy.sh
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
-default_install_directory="$parent_path/plugins"
+INSTALL_DIRECTORY="$parent_path/plugins"
 
 interactive=0
 args=()
@@ -124,7 +124,7 @@ if [ $interactive == 1 ]; then
     echo ""
     args=()
     read -p "Plugin directory?  (plugins): " INSTALL_DIRECTORY
-    INSTALL_DIRECTORY=${INSTALL_DIRECTORY:-$default_install_directory}
+    INSTALL_DIRECTORY=${INSTALL_DIRECTORY:-$INSTALL_DIRECTORY}
     read -p "NTS address?     (127.0.0.1): " address
     address=${address:-"127.0.0.1"}
     args+=("-a" $address)
