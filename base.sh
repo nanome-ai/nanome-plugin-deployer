@@ -1,5 +1,8 @@
 # Arg parsing and preprocessing used by both deploy.sh and remote_deploy.sh
 
+# on linux, buildkit not enabled by default. buildkit builds only relevant stages
+export DOCKER_BUILDKIT=1
+
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 INSTALL_DIRECTORY="$parent_path/plugins"
 
