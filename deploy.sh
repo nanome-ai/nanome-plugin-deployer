@@ -14,10 +14,15 @@ for plugin_name in "${plugins[@]}"; do (
     echo -n "  pulling... "
     git pull -q
     echo "done"
+
     cd docker
     echo -n "  building... "
-    ./build.sh -u 1>> "$logs/$plugin_name.log"
-    echo "done"
+    if ./build.sh -u 1>> "$logs/$plugin_name.log"; then
+        echo "done"
+    else
+        echo "failed"
+        continue
+    fi
 
     get_plugin_index $plugin_name
     arg_string="${args[@]} ${plugin_args[$plugin_index]}"
