@@ -43,6 +43,9 @@ $0 [options]
     -k <key> or --key <key>
         Key file or string for plugins to use when connecting to NTS
 
+    --remote-logging <y/n>
+        Toggle whether or not logs should be forwarded to NTS
+
     -d <directory> or --directory <directory>
         Directory containing plugins
 
@@ -102,6 +105,10 @@ while [ $# -gt 0 ]; do
         -k | --key )
             shift
             key=$1
+            ;;
+        --remote-logging )
+            shift
+            args+=("--remote-logging" $1)
             ;;
         -d | --directory )
             shift
