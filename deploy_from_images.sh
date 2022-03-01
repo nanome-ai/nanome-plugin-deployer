@@ -37,22 +37,22 @@ for REPO in "${REPO_NAMES[@]}"; do(
 
 
 # Deploy vault and vault server
-vault_name="vault"
-vault_server_name="vault-server"
+vault_container_name="vault"
+vault_server_container_name="vault-server"
 vault_network_name="vault-network"
-vault_image_uri="$REGISTRY_URI/$vault_name:$TAG"
-vault_server_image_uri="$REGISTRY_URI/$vault_server_name:$TAG"
+vault_image_uri="$REGISTRY_URI/vault:$TAG"
+vault_server_image_uri="$REGISTRY_URI/vault-server:$TAG"
 
 ARGS="${args[@]} ${plugin_args[$vault_name]}"
 
-if [ -n "$(docker ps -aqf name=$vault_name$)" ]; then
+if [ -n "$(docker ps -aqf name=$vault_container_name$)" ]; then
     echo "removing existing container"
-    docker rm -f $vault_name
+    docker rm -f $vault_container_name
 fi
 
-if [ -n "$(docker ps -aqf name=$vault_server_name)" ]; then
+if [ -n "$(docker ps -aqf name=$vault_server_container_name)" ]; then
     echo "removing existing container"
-    docker rm -f $vault_server_name
+    docker rm -f $vault_server_container_name
 fi
 
 if [ -z "$(docker network ls -qf name=$vault_network_name)" ]; then
@@ -83,16 +83,16 @@ if [ -z "$PORT" ]; then
 fi
 
 docker run -d \
---name vault \
+--name $vault_container_name \
 --restart unless-stopped \
 --network $vault_network_name \
---env no_proxy=$vault_server_name \
---env NO_PROXY=$vault_server_name \
+--env no_proxy=$vault_server_container_name \
+--env NO_PROXY=$vault_server_container_name \
 -e ARGS="$ARGS --api-key $API_KEY" \
 $vault_image_uri
 
 docker run -d \
---name $vault_server_name \
+--name $vault_server_container_name \
 --restart unless-stopped \
 --network $vault_network_name \
 --env no_proxy=vault-converter \

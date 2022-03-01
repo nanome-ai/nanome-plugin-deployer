@@ -23,6 +23,7 @@ plugins=(
     "structure-prep"
     "vault"
 )
+declare -A plugin_args
 key=""
 github_url="https://github.com/nanome-ai/plugin-"
 
@@ -63,7 +64,6 @@ get_plugin_index() {
     done
 }
 
-declare -A plugin_args
 parse_plugin_args() {
     while [ "$1" == "--plugin" ]; do
         shift
