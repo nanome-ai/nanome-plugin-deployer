@@ -24,7 +24,8 @@ for plugin_name in "${plugins[@]}"; do (
         continue
     fi
 
-    arg_string="${args[@]} ${plugin_args[$plugin_name]}"
+    get_plugin_index $plugin_name
+    arg_string="${args[@]} ${plugin_args[$plugin_index]}"
     read -ra args <<< "$arg_string"
 
     echo -n "  deploying... "
