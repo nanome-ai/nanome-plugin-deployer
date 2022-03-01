@@ -55,15 +55,6 @@ $0 [options]
 EOM
 }
 
-plugin_index=0
-get_plugin_index() {
-    for i in "${!plugins[@]}"; do
-        if [ "$1" == "${plugins[$i]}" ]; then
-            plugin_index=$i
-        fi
-    done
-}
-
 parse_plugin_args() {
     while [ "$1" == "--plugin" ]; do
         shift
