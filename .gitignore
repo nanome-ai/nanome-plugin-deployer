@@ -2,3 +2,6 @@
 /plugins/*
 !/plugins/.gitkeep
 redeploy.sh
+.env*
+!.env.sample
+!.env.vault.sample
