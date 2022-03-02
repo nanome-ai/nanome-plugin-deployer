@@ -40,8 +40,6 @@ services:
       - "${NTS_PORT-8888}"
     env_file:
       - .env
-    stdin_open: true
-    tty: true
     command: python run.py -a ${NTS_HOST} -p ${NTS_PORT} -k ${NTS_KEY}
   esp:
     image: public.ecr.aws/h7r1e4h2/esp:latest
@@ -49,8 +47,6 @@ services:
       - "${NTS_PORT-8888}"
     env_file:
       - .env
-    stdin_open: true
-    tty: true
     command: python run.py -a ${NTS_HOST} -p ${NTS_PORT} -k ${NTS_KEY}
   hydrogens:
     image: public.ecr.aws/h7r1e4h2/hydrogens:latest
@@ -58,8 +54,6 @@ services:
       - "${NTS_PORT-8888}"
     env_file:
       - .env
-    stdin_open: true
-    tty: true
     command: python run.py -a ${NTS_HOST} -p ${NTS_PORT} -k ${NTS_KEY}
   minimization:
     image: public.ecr.aws/h7r1e4h2/minimization:latest
@@ -67,8 +61,6 @@ services:
       - "${NTS_PORT-8888}"
     env_file:
       - .env
-    stdin_open: true
-    tty: true
     command: python run.py -a ${NTS_HOST} -p ${NTS_PORT} -k ${NTS_KEY}
   realtime-scoring:
     image: public.ecr.aws/h7r1e4h2/realtime-scoring:latest
@@ -76,8 +68,6 @@ services:
       - "${NTS_PORT-8888}"
     env_file:
       - .env
-    stdin_open: true
-    tty: true
     command: python run.py -a ${NTS_HOST} -p ${NTS_PORT} -k ${NTS_KEY}
   rmsd:
     image: public.ecr.aws/h7r1e4h2/rmsd:latest
@@ -85,8 +75,6 @@ services:
       - "${NTS_PORT-8888}"
     env_file:
       - .env
-    stdin_open: true
-    tty: true
     command: python run.py -a ${NTS_HOST} -p ${NTS_PORT} -k ${NTS_KEY}
   structure-prep:
     image: public.ecr.aws/h7r1e4h2/structure-prep:latest
@@ -94,8 +82,6 @@ services:
       - "${NTS_PORT-8888}"
     env_file:
       - .env
-    stdin_open: true
-    tty: true
     command: python run.py -a ${NTS_HOST} -p ${NTS_PORT} -k ${NTS_KEY}
   vault:
     image: public.ecr.aws/h7r1e4h2/vault:latest
