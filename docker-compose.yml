@@ -108,5 +108,3 @@ volumes:
 networks:
   vault-network:
     driver: bridge
-
-    
