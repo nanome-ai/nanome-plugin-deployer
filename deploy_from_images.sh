@@ -37,8 +37,6 @@ echo -e "\ndeploying plugins..."
 cd $INSTALL_DIRECTORY
 for plugin_name in "${plugins[@]}"; do (
     echo -n "$plugin_name... "
-    mkdir -p $plugin_name
-
     if [ -d "$plugin_name" ]; then
         rm -rf $plugin_name/*
     else
