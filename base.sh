@@ -14,6 +14,7 @@ plugins=(
     "chemical-interactions"
     "chemical-properties"
     "coordinate-align"
+    "data-table"
     "docking"
     "esp"
     "hydrogens"

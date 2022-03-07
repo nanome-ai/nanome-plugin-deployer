@@ -75,11 +75,11 @@ cd nanome-starter-stack
 
 For a typical deployment, run the following command:
 ```sh
-sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config port> --plugin vault -w 80 -u <your VM Host IP>:80
+sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config port> --plugin data-table -w 81 -u <your VM Host IP> --plugin vault -w 80 -u <your VM Host IP>
 ```
 
-*Where the Nanome Vault webUI (-w) is web interface port 80, and (-u) specifies the IP address of your current VM.
-*Make sure to configure your Virtual machine to have the web interface port (80 defaults) to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
+*Where the Nanome Data Table Web UI (-w) is on port 81, Nanome Vault Web UI (-w) is on port 80, and (-u) specifies the IP address of your current VM.
+*Make sure to configure your Virtual machine to have the ports 80 and 81 to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
 
 NOTE: to add arguments specific to a plugin, append any number of `--plugin <plugin-name> [args]` to the `./deploy.sh` command.
 
