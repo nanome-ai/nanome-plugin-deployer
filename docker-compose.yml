@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+  chemical-interactions:
+    image: public.ecr.aws/h7r1e4h2/chemical-interactions:latest
+    env_file:
+      - .env
+  chemical-preview:
+    image: public.ecr.aws/h7r1e4h2/chemical-preview:latest
+    env_file:
+      - .env
+  chemical-properties:
+    image: public.ecr.aws/h7r1e4h2/chemical-properties:latest
+    env_file:
+      - .env
+  coordinate-align:
+    image: public.ecr.aws/h7r1e4h2/coordinate-align:latest
+    env_file:
+      - .env
+  docking-autodock4:
+    image: public.ecr.aws/h7r1e4h2/docking-autodock4:latest
+    env_file:
+      - .env
+    command: python run.py --algorithm autodock4
+  docking-smina:
+    image: public.ecr.aws/h7r1e4h2/docking-smina:latest
+    env_file:
+      - .env
+  esp:
+    image: public.ecr.aws/h7r1e4h2/esp:latest
+    env_file:
+      - .env
+  hydrogens:
+    image: public.ecr.aws/h7r1e4h2/hydrogens:latest
+    env_file:
+      - .env
+  minimization:
+    image: public.ecr.aws/h7r1e4h2/minimization:latest
+    env_file:
+      - .env
+  realtime-scoring:
+    image: public.ecr.aws/h7r1e4h2/realtime-scoring:latest
+    env_file:
+      - .env
+  rmsd:
+    image: public.ecr.aws/h7r1e4h2/rmsd:latest
+    env_file:
+      - .env
+  structure-prep:
+    image: public.ecr.aws/h7r1e4h2/structure-prep:latest
+    env_file:
+      - .env
+  vault:
+    image: public.ecr.aws/h7r1e4h2/vault:latest
+    env_file:
+      - .env
+      # - .env.vault
+    networks:
+      - vault-network
+    command: python run.py --api-key pGmKGvMmatDVzaCTTpnTjdABe
+  vault-server:
+    image: public.ecr.aws/h7r1e4h2/vault-server:latest
+    networks:
+      - vault-network
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+     - vault-volume:/root
+    env_file:
+      - .env
+volumes:
+  vault-volume:
+networks:
+  vault-network:
+    driver: bridge
