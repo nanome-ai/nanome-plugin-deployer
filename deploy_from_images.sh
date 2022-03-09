@@ -10,6 +10,8 @@ REPO_NAMES=(
     "chemical-interactions"
     "chemical-properties"
     "coordinate-align"
+    "data-table"
+    "data-table-server"
     # "docking-autodock4"
     "docking-smina"
     "esp"
