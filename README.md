@@ -106,8 +106,8 @@ Go ahead and log onto the VR client computer and launch Nanome
 If you are unable to deploy the starter stacks script alongside your proxy. Please use the following set of commands to get things up and running
 
 ```
-http_proxy=<http://xxxxxxx:xxxx>
-https_proxy=<https://xxxxxxx:xxxx>
+export http_proxy=<http://xxxxxxx:xxxx>
+export https_proxy=<https://xxxxxxx:xxxx>
 mkdir ~/.docker
 cat > ~/.docker/config.json <<EOM
 {
