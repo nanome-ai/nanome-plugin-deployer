@@ -21,6 +21,7 @@ REPO_NAMES=(
     "minimization"
     "realtime-scoring"
     "rmsd"
+    "smiles-loader"
     "structure-prep"
     "vault"
     "vault-server"

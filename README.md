@@ -24,6 +24,7 @@ Starter Stack Plugins include::
 - Minimization - run energy minimization for molecular structures
 - Real-Time Atom Scoring - using DSX software
 - RMSD - pairwise structural alignment
+- SMILES Loader - use RDKit for SMILES parsing and generation
 - Structure Prep - re-calculate bonds and ribbons for Quest users
 - Vault - web-based file management (perfect for Quest)
 

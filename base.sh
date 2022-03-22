@@ -21,6 +21,7 @@ plugins=(
     "minimization"
     "realtime-scoring"
     "rmsd"
+    "smiles-loader"
     "structure-prep"
     "vault"
 )
