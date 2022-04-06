@@ -8,8 +8,8 @@ source base.sh
 
 REGISTRY_URI="public.ecr.aws/h7r1e4h2"
 REPO_NAMES=(
-    "chemical-preview"
     "chemical-interactions"
+    "chemical-preview"
     "chemical-properties"
     "coordinate-align"
     # "data-table"
@@ -31,6 +31,15 @@ TAG="latest"
 
 echo -e "\npulling plugin images..."
 for REPO in "${REPO_NAMES[@]}"; do (
+    skip=1
+    for plugin in "${plugins[@]}"; do
+        if [[ $REPO = $plugin* ]]; then
+            skip=0
+        fi
+    done
+    if [ $skip == 1 ]; then
+        continue
+    fi
     IMAGE_URI="$REGISTRY_URI/$REPO:$TAG"
     echo -n "$REPO... "
     docker pull $IMAGE_URI >/dev/null

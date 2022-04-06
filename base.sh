@@ -1,5 +1,8 @@
 # Arg parsing and preprocessing used by both deploy.sh and remote_deploy.sh
 
+# exit on ctrl-c
+trap "echo; exit" INT
+
 # on linux, buildkit not enabled by default. buildkit builds only relevant stages
 export DOCKER_BUILDKIT=1
 
@@ -10,8 +13,8 @@ interactive=0
 args=()
 
 plugins=(
-    "2d-chemical-preview"
     "chemical-interactions"
+    "chemical-preview"
     "chemical-properties"
     "coordinate-align"
     # "data-table"
@@ -116,6 +119,11 @@ while [ $# -gt 0 ]; do
         --plugin )
             parse_plugin_args $*
             break
+            ;;
+        --plugins )
+            shift
+            IFS=","
+            read -a plugins <<< "$1"
             ;;
         -h | --help )
             usage
