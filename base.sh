@@ -18,6 +18,7 @@ plugins=(
     "docking"
     "esp"
     "hydrogens"
+    "merge-as-frames"
     "minimization"
     "realtime-scoring"
     "rmsd"
