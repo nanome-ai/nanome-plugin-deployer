@@ -38,4 +38,5 @@ for plugin_name in "${plugins[@]}"; do (
     echo "done"
 ); done
 
+start_nginx_if_needed
 echo -e "\ndone"

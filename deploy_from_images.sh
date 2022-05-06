@@ -12,8 +12,8 @@ REPO_NAMES=(
     "chemical-interactions"
     "chemical-properties"
     "coordinate-align"
-    # "data-table"
-    # "data-table-server"
+    "data-table"
+    "data-table-server"
     # "docking-autodock4"
     "docking-smina"
     "esp"
@@ -61,4 +61,5 @@ for plugin_name in "${plugins[@]}"; do (
     echo "done"
 ); done
 
+start_nginx_if_needed
 echo -e "\ndone"
