@@ -16,6 +16,7 @@ current_dir=$(cd $(dirname ${BASH_SOURCE[0]}); pwd -P)
 docker create --rm \
 --name nginx-proxy \
 --net nginx-proxy \
+--restart unless-stopped \
 -p 80:80 \
 -p 443:443 \
 -v $current_dir/certs:/etc/nginx/certs \
