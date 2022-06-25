@@ -20,6 +20,7 @@ Starter Stack Plugins include::
 - Chemical Properties - cheminformatics calculation using RDKit
 - Docking - using Smina Docking software
 - ESP - calculate electrostatic potential map.
+- High Quality Surfaces - generate stunning molecular surfaces with ambient occlusion
 - Hydrogens - add and remove hydrogens to selected structures within the Nanome workspace
 - Minimization - run energy minimization for molecular structures
 - Real-Time Atom Scoring - using DSX software

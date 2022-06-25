@@ -17,6 +17,7 @@ plugins=(
     # "data-table"
     "docking"
     "esp"
+    "high-quality-surfaces"
     "hydrogens"
     "merge-as-frames"
     "minimization"

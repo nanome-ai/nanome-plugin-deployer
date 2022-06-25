@@ -17,6 +17,7 @@ REPO_NAMES=(
     # "docking-autodock4"
     "docking-smina"
     "esp"
+    "high-quality-surfaces"
     "hydrogens"
     "merge-as-frames"
     "minimization"
