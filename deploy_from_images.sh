@@ -24,6 +24,7 @@ REPO_NAMES=(
     "realtime-scoring"
     "rmsd"
     "smiles-loader"
+    "superimpose-proteins"
     "structure-prep"
     "vault"
     "vault-server"

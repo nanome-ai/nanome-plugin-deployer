@@ -25,6 +25,7 @@ plugins=(
     "rmsd"
     "smiles-loader"
     "structure-prep"
+    "superimpose-proteins"
     "vault"
 )
 plugin_args=()
