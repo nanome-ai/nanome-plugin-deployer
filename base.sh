@@ -14,7 +14,7 @@ plugins=(
     "chemical-interactions"
     "chemical-properties"
     "coordinate-align"
-    # "data-table"
+    "data-table"
     "docking"
     "esp"
     "high-quality-surfaces"
@@ -81,6 +81,17 @@ parse_plugin_args() {
             shift
         done
     done
+}
+
+use_nginx=0
+if [[ "$*" == *"--nginx"* ]]; then
+    use_nginx=1
+fi
+
+start_nginx_if_needed() {
+    if [ $use_nginx -eq 1 ]; then
+        source $parent_path/nginx/start.sh
+    fi
 }
 
 echo -e "Nanome Starter Stack Deployer"

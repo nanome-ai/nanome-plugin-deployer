@@ -18,6 +18,7 @@ Starter Stack Plugins include::
 - 2D Chemical Preview - generate 2D chemical representations
 - Chemical Interactions - calculate interactions using Arpeggio
 - Chemical Properties - cheminformatics calculation using RDKit
+- Data Table - view multi-frame molecular data in a table on the in-VR browser
 - Docking - using Smina Docking software
 - ESP - calculate electrostatic potential map.
 - High Quality Surfaces - generate stunning molecular surfaces with ambient occlusion
@@ -54,15 +55,10 @@ SSH into the VM using the IP address and the user
 ```sh
 ssh ec2-user@<ip-address>
 
-sudo yum install git -y
-sudo yum install docker -y
+sudo yum install docker git -y
 sudo systemctl enable docker
 sudo usermod -aG docker $USER
 sudo service docker start
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-
 ```
 Now Log out and back into the instance
 
@@ -77,15 +73,34 @@ cd nanome-starter-stack
 
 For a typical deployment, run the following command:
 ```sh
-sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config port> --plugin data-table -w 81 -u <your VM Host IP> --plugin vault -w 80 -u <your VM Host IP>
+NTS_IP=<your Nanome Stacks Config IP>
+HOST_IP=<your VM Host IP>
+sudo ./deploy.sh -a $NTS_IP \
+  --plugin data-table --nginx -u table.$HOST_IP.nip.io \
+  --plugin vault --nginx -u vault.$HOST_IP.nip.io
 ```
 
-*Where the Nanome Data Table Web UI (-w) is on port 81, Nanome Vault Web UI (-w) is on port 80, and (-u) specifies the IP address of your current VM.
-*Make sure to configure your Virtual machine to have the ports 80 and 81 to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
+\*Make sure to configure your Virtual machine to have the ports 80 and 443 to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
 
 NOTE: to add arguments specific to a plugin, append any number of `--plugin <plugin-name> [args]` to the `./deploy.sh` command.
 
-Advanced: If you wish to enable git-ops style deployments, you can replace `./deploy.sh` with `./remote_deploy.sh` in the command above. Remote deploy will clone the plugin repositories using bare repos, which allows you to push changes to the repo. When a change is received, it uses git hooks to build and deploy your latest changes.
+#### DNS for Data Table and Vault
+
+Since both Data Table and Vault use web servers, an nginx reverse proxy will be started to forward the requests to the appropriate web servers.
+
+nip.io is a wildcard DNS service that will resolve to the IP address provided, while still letting nginx know if a request is meant for Data Table or Vault.
+
+If you have a custom DNS you would like to use, create entries for both Data Table and Vault (e.g. table.example.com and vault.example.com) and replace the nip.io entries with your custom DNS.
+
+#### HTTPS for Data Table and Vault
+
+If you would like to enable HTTPS for Data Table and Vault, you can do so by adding the `--https` flag to both the `--plugin data-table` and `--plugin vault` parts of the command after each `--nginx` flag.
+
+By default, self-signed certs in the nginx/certs folder are used, but if you'd like to provide your own certs, simply replace `default.crt` and `default.key` with your own certs.
+
+#### Advanced
+
+If you wish to enable git-ops style deployments, you can replace `./deploy.sh` with `./remote_deploy.sh` in the command above. Remote deploy will clone the plugin repositories using bare repos, which allows you to push changes to the repo. When a change is received, it uses git hooks to build and deploy your latest changes.
 
 ### Step 4: Docker Container Health Check
 
