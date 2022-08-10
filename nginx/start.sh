@@ -13,7 +13,7 @@ fi
 
 current_dir=$(cd $(dirname ${BASH_SOURCE[0]}); pwd -P)
 
-docker create --rm \
+docker create \
 --name nginx-proxy \
 --net nginx-proxy \
 --restart unless-stopped \
