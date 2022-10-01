@@ -3,7 +3,14 @@
 # on linux, buildkit not enabled by default. buildkit builds only relevant stages
 export DOCKER_BUILDKIT=1
 
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+parent_path=$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P)
+rename_path=$(echo "$parent_path" | sed 's/nanome-starter-stack/nanome-plugin-deployer/g')
+if [ "$rename_path" != "$parent_path" ]; then
+    echo "renaming directory to nanome-plugin-deployer"
+    mv "$parent_path" "$rename_path"
+    parent_path="$rename_path"
+fi
+
 INSTALL_DIRECTORY="$parent_path/plugins"
 
 interactive=0
@@ -94,7 +101,7 @@ start_nginx_if_needed() {
     fi
 }
 
-echo -e "Nanome Starter Stack Deployer"
+echo -e "Nanome Plugin Deployer"
 
 if [ $# -eq 0 ]; then
     interactive=1
