@@ -13,6 +13,7 @@ plugins=(
     "2d-chemical-preview"
     "chemical-interactions"
     "chemical-properties"
+    "conformer-generator"
     "coordinate-align"
     "data-table"
     "docking"
