@@ -11,6 +11,7 @@ REPO_NAMES=(
     "chemical-preview"
     "chemical-interactions"
     "chemical-properties"
+    "conformer-generator"
     "coordinate-align"
     "data-table"
     "data-table-server"
