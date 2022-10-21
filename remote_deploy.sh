@@ -1,5 +1,5 @@
 #!/bin/bash
-# Deploy starter stack in a way that enables updating via git push.
+# Deploy plugins in a way that enables updating via git push.
 
 source base.sh
 
@@ -14,7 +14,7 @@ for plugin_name in "${plugins[@]}"; do (
     WORK_TREE=$PWD/$plugin_name
 
     if [ ! -d $GIT_DIR ]; then
-        echo -n "Cloning $github_url to $GIT_DIR" 
+        echo -n "Cloning $github_url to $GIT_DIR"
         git clone --bare -q $github_url $GIT_DIR
     fi
     if [ ! -d $WORK_TREE ]; then
@@ -25,7 +25,7 @@ for plugin_name in "${plugins[@]}"; do (
     echo "done"
 
     # Default branch is usually master, but sometimes it's main.
-    DEFAULT_BRANCH="$(cd $GIT_DIR && git remote show origin | sed -n '/HEAD branch/s/.*: //p')"    
+    DEFAULT_BRANCH="$(cd $GIT_DIR && git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
 
     # copy template post-receive hook into git repo, and replace with correct values.
     POST_RECEIVE_HOOK=$GIT_DIR/hooks/post-receive
