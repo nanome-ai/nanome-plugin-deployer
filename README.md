@@ -18,6 +18,7 @@ Nanome Plugins include:
 - 2D Chemical Preview - generate 2D chemical representations
 - Chemical Interactions - calculate interactions using Arpeggio
 - Chemical Properties - cheminformatics calculation using RDKit
+- Conformer Generator - generate conformers using RDKit
 - Coordinate Align - align coordinate systems of multiple molecules
 - Data Table - view multi-frame molecular data in a table on the in-VR browser
 - Docking - using Smina Docking software
