@@ -6,7 +6,14 @@ trap "echo; exit" INT
 # on linux, buildkit not enabled by default. buildkit builds only relevant stages
 export DOCKER_BUILDKIT=1
 
-parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+parent_path=$(cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P)
+rename_path=$(echo "$parent_path" | sed 's/nanome-starter-stack/nanome-plugin-deployer/g')
+if [ "$rename_path" != "$parent_path" ]; then
+    echo "renaming directory to nanome-plugin-deployer"
+    mv "$parent_path" "$rename_path"
+    parent_path="$rename_path"
+fi
+
 INSTALL_DIRECTORY="$parent_path/plugins"
 
 interactive=0
@@ -16,10 +23,12 @@ plugins=(
     "chemical-interactions"
     "chemical-preview"
     "chemical-properties"
+    "conformer-generator"
     "coordinate-align"
-    # "data-table"
+    "data-table"
     "docking"
     "esp"
+    "high-quality-surfaces"
     "hydrogens"
     "merge-as-frames"
     "minimization"
@@ -27,6 +36,7 @@ plugins=(
     "rmsd"
     "smiles-loader"
     "structure-prep"
+    "superimpose-proteins"
     "vault"
 )
 plugin_args=()
@@ -84,7 +94,18 @@ parse_plugin_args() {
     done
 }
 
-echo -e "Nanome Starter Stack Deployer"
+use_nginx=0
+if [[ "$*" == *"--nginx"* ]]; then
+    use_nginx=1
+fi
+
+start_nginx_if_needed() {
+    if [ $use_nginx -eq 1 ]; then
+        source $parent_path/nginx/start.sh
+    fi
+}
+
+echo -e "Nanome Plugin Deployer"
 
 if [ $# -eq 0 ]; then
     interactive=1

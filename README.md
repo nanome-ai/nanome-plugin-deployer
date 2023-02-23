@@ -1,34 +1,40 @@
-# Auto Deploy the Nanome Starter Stack
+# Nanome Plugin Deployer
 
-A quick script to deploy the Nanome Starter Stack group of plugins
+A quick script to deploy Nanome plugins
 
 ## Video tutorial
 
-Check out our step-by-step tutorial on deploying Nanome Starter Stack from setting up a server to running a plugin:
+Check out our step-by-step tutorial on deploying Nanome plugins from setting up a server to running a plugin:
 https://youtu.be/YrEJ1xfZ9a0
 
-## Nanome Starter Stack Deployment Instructions
+## Nanome Plugin Deployment Instructions
 
-In order to successfully complete the deployment of Nanome’s starter stack group of plugins, you will need to verify that your license is Stack Enabled and you have the Stacks Configuration details in-hand (consists of an IP address and a port).
+In order to successfully complete the deployment of Nanome plugins, you will need to verify that your license is Stack Enabled and you have the Stacks Configuration details in-hand (consists of an IP address and a port).
 
 For Non-Enterprise Customers, please verify that your Nanome Licenses are _Stacks Enabled_ with your Nanome representative.
 
-Starter Stack Plugins include::
+Nanome Plugins include:
 
 - 2D Chemical Preview - generate 2D chemical representations
 - Chemical Interactions - calculate interactions using Arpeggio
 - Chemical Properties - cheminformatics calculation using RDKit
+- Conformer Generator - generate conformers using RDKit
+- Coordinate Align - align coordinate systems of multiple molecules
+- Data Table - view multi-frame molecular data in a table on the in-VR browser
 - Docking - using Smina Docking software
 - ESP - calculate electrostatic potential map.
+- High Quality Surfaces - generate stunning molecular surfaces with ambient occlusion
 - Hydrogens - add and remove hydrogens to selected structures within the Nanome workspace
+- Merge as Frames - merge multiple molecules into a single molecule with multiple frames
 - Minimization - run energy minimization for molecular structures
 - Real-Time Atom Scoring - using DSX software
 - RMSD - pairwise structural alignment
 - SMILES Loader - use RDKit for SMILES parsing and generation
 - Structure Prep - re-calculate bonds and ribbons for Quest users
+- Superimpose Proteins - align protein structures
 - Vault - web-based file management (perfect for Quest)
 
-### Step 1: Provisioning the Dedicated Stack/Plugins Virtual Machine
+### Step 1: Provisioning the Dedicated Plugins Virtual Machine
 
 Specifications:
 Amazon AWS T2.medium EC2 Linux machine with 30 GB of disk storage or equivalent
@@ -53,38 +59,52 @@ SSH into the VM using the IP address and the user
 ```sh
 ssh ec2-user@<ip-address>
 
-sudo yum install git -y
-sudo yum install docker -y
+sudo yum install docker git -y
 sudo systemctl enable docker
 sudo usermod -aG docker $USER
 sudo service docker start
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-
 ```
 Now Log out and back into the instance
 
 * If you are on a CentOS machine then follow this for installing docker: https://docs.docker.com/engine/install/centos/
 
-### Step 3: Pull the Nanome Starter Stack auto-deploy script and run it
+### Step 3: Pull the Nanome Plugin Deployer and run it
 
 ```sh
-git clone https://github.com/nanome-ai/nanome-starter-stack
-cd nanome-starter-stack
+git clone https://github.com/nanome-ai/nanome-plugin-deployer
+cd nanome-plugin-deployer
 ```
 
 For a typical deployment, run the following command:
 ```sh
-sudo ./deploy.sh -a <your Nanome Stacks Config IP> -p <your Nanome Stacks Config port> --plugin data-table -w 81 -u <your VM Host IP> --plugin vault -w 80 -u <your VM Host IP>
+NTS_IP=<your Nanome Stacks Config IP>
+HOST_IP=<your VM Host IP>
+sudo ./deploy.sh -a $NTS_IP \
+  --plugin data-table --nginx -u table.example.com \
+  --plugin vault --nginx -u vault.example.com
 ```
 
-*Where the Nanome Data Table Web UI (-w) is on port 81, Nanome Vault Web UI (-w) is on port 80, and (-u) specifies the IP address of your current VM.
-*Make sure to configure your Virtual machine to have the ports 80 and 81 to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
+\*Make sure to configure your virtual machine to have the ports 80 and 443 to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
+
+In order for the web pages for Data Table and Vault to work, you'll have to create DNS entries for table.example.com and vault.example.com to point to the IP address of the virtual machine, replacing "example.com" with your domain.
 
 NOTE: to add arguments specific to a plugin, append any number of `--plugin <plugin-name> [args]` to the `./deploy.sh` command.
 
-Advanced: If you wish to enable git-ops style deployments, you can replace `./deploy.sh` with `./remote_deploy.sh` in the command above. Remote deploy will clone the plugin repositories using bare repos, which allows you to push changes to the repo. When a change is received, it uses git hooks to build and deploy your latest changes.
+#### DNS for Data Table and Vault
+
+Since both Data Table and Vault use web servers, an nginx reverse proxy will be started to forward the requests to the appropriate web servers. The recommended way to do this is to create DNS entries for the domains you want to use for Data Table and Vault. For example, if you want to use `table.example.com` and `vault.example.com`, you'll have to create DNS entries for those domains to point to the IP address of the virtual machine, replacing "example.com" with your domain.
+
+As an alternative to using custom DNS, you can use nip.io by replacing `table.example.com` with `table.$HOST_IP.nip.io` and `vault.example.com` with `vault.$HOST_IP.nip.io`. nip.io is a wildcard DNS service that will resolve to the IP address provided, while still letting nginx know if a request is meant for Data Table or Vault.
+
+#### HTTPS for Data Table and Vault
+
+If you would like to enable HTTPS for Data Table and Vault, you can do so by adding the `--https` flag to both the `--plugin data-table` and `--plugin vault` parts of the command after each `--nginx` flag.
+
+By default, self-signed certs in the nginx/certs folder are used, but if you'd like to provide your own certs, simply replace `default.crt` and `default.key` with your own certs.
+
+#### Advanced
+
+If you wish to enable git-ops style deployments, you can replace `./deploy.sh` with `./remote_deploy.sh` in the command above. Remote deploy will clone the plugin repositories using bare repos, which allows you to push changes to the repo. When a change is received, it uses git hooks to build and deploy your latest changes.
 
 ### Step 4: Docker Container Health Check
 
@@ -104,7 +124,7 @@ Go ahead and log onto the VR client computer and launch Nanome
 
 
 #### Proxy support
-If you are unable to deploy the starter stacks script alongside your proxy. Please use the following set of commands to get things up and running
+If you are unable to deploy the plugins alongside your proxy, please use the following set of commands to get things up and running:
 
 ```
 export http_proxy=<http://xxxxxxx:xxxx>

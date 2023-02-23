@@ -38,12 +38,20 @@ services:
     image: public.ecr.aws/h7r1e4h2/minimization:latest
     env_file:
       - .env
+  superimpose:
+    image: public.ecr.aws/h7r1e4h2/superimpose-proteins:1.0.0
+    env_file:
+      - .env
   realtime-scoring:
     image: public.ecr.aws/h7r1e4h2/realtime-scoring:latest
     env_file:
       - .env
   rmsd:
     image: public.ecr.aws/h7r1e4h2/rmsd:latest
+    env_file:
+      - .env
+  smiles-loader:
+    image: public.ecr.aws/h7r1e4h2/smiles-loader:latest
     env_file:
       - .env
   structure-prep:
