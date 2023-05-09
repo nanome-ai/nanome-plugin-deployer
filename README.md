@@ -81,7 +81,8 @@ NTS_IP=<your Nanome Stacks Config IP>
 HOST_IP=<your VM Host IP>
 sudo ./deploy.sh -a $NTS_IP \
   --plugin data-table --nginx -u table.example.com \
-  --plugin vault --nginx -u vault.example.com
+  --plugin vault --nginx -u vault.example.com \
+  --service quickdrop --nginx --url quickdrop.example.com
 ```
 
 \*Make sure to configure your virtual machine to have the ports 80 and 443 to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
