@@ -14,6 +14,14 @@ DOCKER_ARGS=()
 
 while [ -n "$1" ]; do
     case $1 in
+        -https | --https )
+            PORT=443
+            DOCKER_ARGS+=(
+                --env CERT_NAME=default
+                --env VIRTUAL_PORT=443
+                --env VIRTUAL_PROTO=https
+            )
+            ;;
         --nginx )
             NGINX=1
             ;;
