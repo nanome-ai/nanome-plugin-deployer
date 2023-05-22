@@ -244,7 +244,6 @@ if [ $interactive == 1 ]; then
 fi
 
 if [ ! -d "$INSTALL_DIRECTORY" ]; then
-    echo "Directory $INSTALL_DIRECTORY does not exist"
     mkdir -p $INSTALL_DIRECTORY
 fi
 

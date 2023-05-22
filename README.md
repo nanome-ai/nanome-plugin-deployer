@@ -85,8 +85,8 @@ For a typical deployment, run the following command:
 NTS_IP=<your Nanome Stacks Config IP>
 HOST_IP=<your VM Host IP>
 sudo ./deploy.sh -a $NTS_IP \
-  --plugin data-table --nginx -u table.example.com \
-  --plugin vault --nginx -u vault.example.com \
+  --plugin data-table --nginx --url table.example.com \
+  --plugin vault --nginx --url vault.example.com \
   --service quickdrop --nginx --url quickdrop.example.com
 ```
 

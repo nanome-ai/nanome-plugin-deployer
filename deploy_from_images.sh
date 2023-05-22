@@ -49,7 +49,8 @@ for REPO in "${REPO_NAMES[@]}"; do (
 ); done
 
 echo -e "\ndeploying plugins..."
-cd $INSTALL_DIRECTORY
+mkdir -p $INSTALL_DIRECTORY/scripts
+cd $INSTALL_DIRECTORY/scripts
 for plugin_name in "${plugins[@]}"; do (
     echo -n "$plugin_name... "
     if [ -d "$plugin_name" ]; then
