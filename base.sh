@@ -14,6 +14,13 @@ if [ "$rename_path" != "$parent_path" ]; then
     parent_path="$rename_path"
 fi
 
+# lots of backslashes here to get literal backslash and newline
+redeploy="$0 $*"
+redeploy=${redeploy//--plugin/\\\\\\n  --plugin}
+redeploy=${redeploy//--service/\\\\\\n  --service}
+printf "$redeploy" > redeploy.sh
+chmod +x redeploy.sh
+
 INSTALL_DIRECTORY="$parent_path/plugins"
 
 interactive=0

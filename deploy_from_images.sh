@@ -1,9 +1,6 @@
 #!/bin/bash
 # Use Public ECR images to deploy plugins stack
 
-echo "./deploy_from_images.sh $*" > redeploy.sh
-chmod +x redeploy.sh
-
 source base.sh
 
 REGISTRY_URI="public.ecr.aws/h7r1e4h2"

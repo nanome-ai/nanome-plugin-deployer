@@ -5,7 +5,7 @@ if [ -z "$(docker network ls -qf name=nginx-proxy)" ]; then
     docker network create nginx-proxy
 fi
 
-existing=$(docker ps -qf name=nginx-proxy)
+existing=$(docker ps -aqf name=nginx-proxy)
 if [ -n "$existing" ]; then
     echo "removing existing container"
     docker rm -f $existing

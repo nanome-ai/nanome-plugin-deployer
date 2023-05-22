@@ -1,9 +1,6 @@
 #!/bin/bash
 # Build images from source to deploy plugins stack
 
-echo "./deploy.sh $*" > redeploy.sh
-chmod +x redeploy.sh
-
 source base.sh
 
 cd $INSTALL_DIRECTORY
