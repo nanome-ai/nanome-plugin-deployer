@@ -74,4 +74,5 @@ for plugin_name in "${plugins[@]}"; do (
 ); done
 
 start_nginx_if_needed
+start_services_if_needed
 echo -e "\ndone"

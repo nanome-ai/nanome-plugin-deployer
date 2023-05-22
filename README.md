@@ -34,6 +34,10 @@ Nanome Plugins include:
 - Superimpose Proteins - align protein structures
 - Vault - web-based file management (perfect for Quest)
 
+Nanome Services include:
+
+- Quick Drop - drag and drop files onto a web page to load them into Nanome
+
 ### Step 1: Provisioning the Dedicated Plugins Virtual Machine
 
 Specifications:
@@ -51,6 +55,7 @@ Security Groups:
 Configure the security groups to allow the following traffic:
 SSH Port 22
 HTTP Port 80
+HTTPS Port 443
 
 ### Step 2: SSH into the VM + Install Git & Docker
 
@@ -81,7 +86,8 @@ NTS_IP=<your Nanome Stacks Config IP>
 HOST_IP=<your VM Host IP>
 sudo ./deploy.sh -a $NTS_IP \
   --plugin data-table --nginx -u table.example.com \
-  --plugin vault --nginx -u vault.example.com
+  --plugin vault --nginx -u vault.example.com \
+  --service quickdrop --nginx --url quickdrop.example.com
 ```
 
 \*Make sure to configure your virtual machine to have the ports 80 and 443 to have the security group configured to allow TCP custom port traffic (from 0.0.0.0/0 default).
@@ -90,15 +96,17 @@ In order for the web pages for Data Table and Vault to work, you'll have to crea
 
 NOTE: to add arguments specific to a plugin, append any number of `--plugin <plugin-name> [args]` to the `./deploy.sh` command.
 
-#### DNS for Data Table and Vault
+#### DNS for Web Plugins and Services
 
-Since both Data Table and Vault use web servers, an nginx reverse proxy will be started to forward the requests to the appropriate web servers. The recommended way to do this is to create DNS entries for the domains you want to use for Data Table and Vault. For example, if you want to use `table.example.com` and `vault.example.com`, you'll have to create DNS entries for those domains to point to the IP address of the virtual machine, replacing "example.com" with your domain.
+Since Data Table, Vault, and Quick Drop all use web servers, an nginx reverse proxy will be started to forward the requests to the appropriate web servers. The recommended way to do this is to create DNS entries for the domains you want to use for these plugins and services. For example, if you want to use `table.example.com`, `vault.example.com`, and `quickdrop.example.com` you'll have to create DNS entries for those domains to point to the IP address of the virtual machine, replacing "example.com" with your domain.
 
-As an alternative to using custom DNS, you can use nip.io by replacing `table.example.com` with `table.$HOST_IP.nip.io` and `vault.example.com` with `vault.$HOST_IP.nip.io`. nip.io is a wildcard DNS service that will resolve to the IP address provided, while still letting nginx know if a request is meant for Data Table or Vault.
+As an alternative to using custom DNS, you can use nip.io by replacing `.example.com` with `.$HOST_IP.nip.io` (e.g. `vault.example.com` becomes `vault.$HOST_IP.nip.io`). nip.io is a wildcard DNS service that will resolve to the IP address provided, while still letting nginx know which web plugin or service to forward the request to.
 
-#### HTTPS for Data Table and Vault
+#### HTTPS for Web Plugins and Services
 
 If you would like to enable HTTPS for Data Table and Vault, you can do so by adding the `--https` flag to both the `--plugin data-table` and `--plugin vault` parts of the command after each `--nginx` flag.
+
+For Quick Drop, the same can be done by adding the `--https` flag to the `--service quickdrop` part of the command after the `--nginx` flag.
 
 By default, self-signed certs in the nginx/certs folder are used, but if you'd like to provide your own certs, simply replace `default.crt` and `default.key` with your own certs.
 

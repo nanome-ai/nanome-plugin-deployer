@@ -43,6 +43,12 @@ plugin_args=()
 key=""
 github_url="https://github.com/nanome-ai/plugin-"
 
+services=(
+    "quickdrop"
+)
+service_args=()
+use_services=0
+
 usage() {
     cat << EOM
 $0 [options]
@@ -68,11 +74,15 @@ $0 [options]
     --plugin <plugin-name> [args]
         Additional args for a specific plugin
 
+    --service <service-name> [args]
+        Launch a service with additional args
+
 EOM
 }
 
 plugin_index=0
 get_plugin_index() {
+    plugin_index=-1
     for i in "${!plugins[@]}"; do
         if [ "$1" == "${plugins[$i]}" ]; then
             plugin_index=$i
@@ -80,17 +90,61 @@ get_plugin_index() {
     done
 }
 
+service_index=0
+get_service_index() {
+    for i in "${!services[@]}"; do
+        if [ "$1" == "${services[$i]}" ]; then
+            service_index=$i
+        fi
+    done
+}
+
 parse_plugin_args() {
-    while [ "$1" == "--plugin" ]; do
-        shift
-        plugin_name="$1"
-        shift
-        get_plugin_index $plugin_name
-        plugin_args[$plugin_index]=""
-        while [ $# -gt 0 ] && [ "$1" != "--plugin" ]; do
-            plugin_args[$plugin_index]+="$1 "
-            shift
-        done
+    shift
+    plugin_name="$1"
+    shift
+    get_plugin_index $plugin_name
+    plugin_args[$plugin_index]=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --plugin )
+                parse_plugin_args $*
+                break
+                ;;
+            --service )
+                parse_service_args $*
+                break
+                ;;
+            *)
+                plugin_args[$plugin_index]+="$1 "
+                shift
+                ;;
+        esac
+    done
+}
+
+parse_service_args() {
+    use_services=1
+    shift
+    service_name="$1"
+    shift
+    get_service_index $service_name
+    service_args[$service_index]=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --plugin )
+                parse_plugin_args $*
+                break
+                ;;
+            --service )
+                parse_service_args $*
+                break
+                ;;
+            *)
+                service_args[$service_index]+="$1 "
+                shift
+                ;;
+        esac
     done
 }
 
@@ -102,6 +156,12 @@ fi
 start_nginx_if_needed() {
     if [ $use_nginx -eq 1 ]; then
         source $parent_path/nginx/start.sh
+    fi
+}
+
+start_services_if_needed() {
+    if [ $use_services -eq 1 ]; then
+        source $parent_path/services.sh
     fi
 }
 
@@ -147,6 +207,10 @@ while [ $# -gt 0 ]; do
             IFS=","
             read -a plugins <<< "$1"
             ;;
+        --service )
+            parse_service_args $*
+            break
+            ;;
         -h | --help )
             usage
             exit
@@ -157,7 +221,6 @@ while [ $# -gt 0 ]; do
     esac
     shift
 done
-
 
 if [ $interactive == 1 ]; then
     echo ""
