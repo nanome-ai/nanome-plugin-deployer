@@ -17,6 +17,10 @@ services:
     image: public.ecr.aws/h7r1e4h2/coordinate-align:latest
     env_file:
       - .env
+  cryoem:
+    image: public.ecr.aws/h7r1e4h2/cryoem:latest
+    env_file:
+      - .env
   docking-autodock4:
     image: public.ecr.aws/h7r1e4h2/docking-autodock4:latest
     env_file:

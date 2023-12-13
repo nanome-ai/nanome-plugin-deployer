@@ -32,6 +32,7 @@ plugins=(
     "chemical-properties"
     "conformer-generator"
     "coordinate-align"
+    "cryoem"
     "data-table"
     "docking"
     "esp"
