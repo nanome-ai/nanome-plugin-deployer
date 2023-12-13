@@ -10,6 +10,7 @@ REPO_NAMES=(
     "chemical-properties"
     "conformer-generator"
     "coordinate-align"
+    "cryoem"
     "data-table"
     "data-table-server"
     # "docking-autodock4"
