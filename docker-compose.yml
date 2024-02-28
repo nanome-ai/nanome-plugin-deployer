@@ -1,6 +1,10 @@
 version: "3.9"
 
 services:
+  antibodies:
+    image: public.ecr.aws/h7r1e4h2/antibodies:latest
+    env_file:
+      - .env
   chemical-interactions:
     image: public.ecr.aws/h7r1e4h2/chemical-interactions:latest
     env_file:
