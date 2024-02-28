@@ -5,6 +5,7 @@ source base.sh
 
 REGISTRY_URI="public.ecr.aws/h7r1e4h2"
 REPO_NAMES=(
+    "antibodies"
     "chemical-interactions"
     "chemical-preview"
     "chemical-properties"

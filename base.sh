@@ -27,6 +27,7 @@ interactive=0
 args=()
 
 plugins=(
+    "antibodies"
     "chemical-interactions"
     "chemical-preview"
     "chemical-properties"
