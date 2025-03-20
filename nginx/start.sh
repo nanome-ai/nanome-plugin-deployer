@@ -6,8 +6,10 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 fi
 
 port_arg=("-p $nginx_port:80")
-if [ $use_https -eq 1 ] && [ $nginx_port_set -eq 0 ]; then
-    nginx_port=443
+if [ $use_https -eq 1 ]; then
+    if [ $nginx_port_set -eq 0 ]; then
+        nginx_port=443
+    fi
     port_arg=("-p $nginx_port:443")
 fi
 
