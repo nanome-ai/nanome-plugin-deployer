@@ -1,5 +1,16 @@
 #!/bin/bash
 
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    echo "Error: This script cannot be executed directly. Please use the deploy.sh script."
+    exit 1
+fi
+
+port_arg=("-p $nginx_port:80")
+if [ $use_https -eq 1 ] && [ $nginx_port_set -eq 0 ]; then
+    nginx_port=443
+    port_arg=("-p $nginx_port:443")
+fi
+
 if [ -z "$(docker network ls -qf name=nginx-proxy)" ]; then
     echo "creating network"
     docker network create nginx-proxy
@@ -17,8 +28,7 @@ docker create \
 --name nginx-proxy \
 --net nginx-proxy \
 --restart unless-stopped \
--p 80:80 \
--p 443:443 \
+${port_arg[@]} \
 -v $current_dir/certs:/etc/nginx/certs \
 -v $current_dir/custom.conf:/etc/nginx/conf.d/custom.conf:ro \
 -v /var/run/docker.sock:/tmp/docker.sock:ro \
