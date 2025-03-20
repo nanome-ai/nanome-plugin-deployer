@@ -102,6 +102,8 @@ Since Data Table, Vault, and Quick Drop all use web servers, an nginx reverse pr
 
 As an alternative to using custom DNS, you can use nip.io by replacing `.example.com` with `.$HOST_IP.nip.io` (e.g. `vault.example.com` becomes `vault.$HOST_IP.nip.io`). nip.io is a wildcard DNS service that will resolve to the IP address provided, while still letting nginx know which web plugin or service to forward the request to.
 
+If a custom port is required, you can provide it with the `--nginx-port <port>` arg.
+
 #### HTTPS for Web Plugins and Services
 
 If you would like to enable HTTPS for Data Table and Vault, you can do so by adding the `--https` flag to both the `--plugin data-table` and `--plugin vault` parts of the command after each `--nginx` flag.

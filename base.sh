@@ -80,6 +80,9 @@ $0 [options]
     -d <directory> or --directory <directory>
         Directory containing plugins
 
+    --nginx-port <port>
+        Specify a custom port for the nginx-proxy
+
     --plugin <plugin-name> [args]
         Additional args for a specific plugin
 
@@ -124,6 +127,15 @@ parse_plugin_args() {
                 parse_service_args $*
                 break
                 ;;
+            -u | --url )
+                url=$2
+                if [ $nginx_port_set -eq 1 ]; then
+                    url+=":$nginx_port"
+                fi
+                plugin_args[$plugin_index]+="--url $url "
+                shift
+                shift
+                ;;
             *)
                 plugin_args[$plugin_index]+="$1 "
                 shift
@@ -157,9 +169,15 @@ parse_service_args() {
     done
 }
 
+use_https=0
 use_nginx=0
+nginx_port=80
+nginx_port_set=0
 if [[ "$*" == *"--nginx"* ]]; then
     use_nginx=1
+fi
+if [[ "$*" == *"--https"* ]]; then
+    use_https=1
 fi
 
 start_nginx_if_needed() {
@@ -206,6 +224,11 @@ while [ $# -gt 0 ]; do
         -d | --directory )
             shift
             INSTALL_DIRECTORY=$1
+            ;;
+        --nginx-port )
+            shift
+            nginx_port_set=1
+            nginx_port=$1
             ;;
         --plugin )
             parse_plugin_args $*
