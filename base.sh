@@ -127,6 +127,15 @@ parse_plugin_args() {
                 parse_service_args $*
                 break
                 ;;
+            -u | --url )
+                url=$2
+                if [ $nginx_port_set -eq 1 ]; then
+                    url+=":$nginx_port"
+                fi
+                plugin_args[$plugin_index]+="--url $url "
+                shift
+                shift
+                ;;
             *)
                 plugin_args[$plugin_index]+="$1 "
                 shift
