@@ -34,7 +34,7 @@ ${port_arg[@]} \
 -v $current_dir/certs:/etc/nginx/certs \
 -v $current_dir/custom.conf:/etc/nginx/conf.d/custom.conf:ro \
 -v /var/run/docker.sock:/tmp/docker.sock:ro \
-jwilder/nginx-proxy
+jwilder/nginx-proxy:1.6.4
 
 docker network connect data-table-network nginx-proxy
 docker network connect vault-network nginx-proxy
